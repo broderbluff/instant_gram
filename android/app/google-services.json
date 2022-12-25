@@ -29,6 +29,13 @@
             {
               "client_id": "268921098409-if33hf19bvi3qp1miceaq7r8hhqm6137.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "268921098409-uc1m9rr9mnhsftfv3mg27tl4h4httc59.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.instantGram"
+              }
             }
           ]
         }
