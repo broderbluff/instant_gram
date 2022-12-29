@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:instant_gram/state/auth/backend/authenticator.dart';
 import 'package:instant_gram/state/auth/provider/auth_state_provider.dart';
 import 'package:instant_gram/state/auth/provider/is_logged_in_provider.dart';
+import 'package:instant_gram/state/providers/is_loading_provider.dart';
 import 'package:instant_gram/views/components/loading/loading_screen.dart';
 
 import 'firebase_options.dart';
@@ -38,6 +39,18 @@ class App extends StatelessWidget {
       themeMode: ThemeMode.dark,
       home: Consumer(
         builder: ((context, ref, child) {
+          ref.listen<bool>(
+            isLoadingProvider,
+            ((_, isLoading) {
+              if (isLoading) {
+                LoadingScreen.instance()
+                    .show(context: context, text: 'Loading...');
+              } else {
+                LoadingScreen.instance().hide();
+              }
+            }),
+          );
+
           final isLoggedIn = ref.watch(isLoggedInProvider);
           return isLoggedIn ? const MainView() : const LoginView();
         }),
@@ -62,9 +75,8 @@ class MainView extends StatelessWidget {
         builder: (_, ref, child) {
           return TextButton(
             onPressed: () async {
-                  LoadingScreen.instance().show(context: context, text: 'Loading');
 
-             // ref.read(authStateProvider.notifier).logOut();
+              ref.read(authStateProvider.notifier).logOut();
             },
             child: const Text(
               'Logout',
